@@ -1,13 +1,16 @@
-document.getElementById('capture-button').addEventListener('click', function () {
-  // Captura a div
-  html2canvas(document.querySelector("#post-container")).then(canvas => {
-      // Converte o canvas para uma imagem
-      let img = canvas.toDataURL("image/png");
+document.addEventListener('DOMContentLoaded', () => {
+  const captureButtons = document.querySelectorAll('.capture-button');
 
-      // Cria um link para download da imagem
-      let link = document.createElement('a');
-      link.href = img;
-      link.download = 'instagram-story.png';
-      link.click();
+  captureButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+          const postContainer = button.previousElementSibling; // Pega o post-container anterior ao botão
+          html2canvas(postContainer).then(canvas => {
+              const img = canvas.toDataURL('image/png');
+              const link = document.createElement('a');
+              link.href = img;
+              link.download = `destaque-${index + 1}.png`;
+              link.click();
+          });
+      });
   });
 });
